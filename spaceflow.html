@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SpaceFlow - Rezerwuj Pokoje</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="spaceflow.css">
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+      <div class="logo-section">
+
+        <h1>SpaceFlow</h1>
+
+        <p>Rezerwuj sale jak nigdy dotąd ✨</p>
+
+      </div>
+
+      <div class="header-buttons">
+
+        <button class="btn-icon" id="chatBtn">
+
+          <i class="fas fa-comments"></i>
+
+        </button>
+
+        <button class="btn-primary">Rezerwuj</button>
+
+      </div>
+
+    </div>
+
+    <!-- FILTERS -->
+
+    <div class="filters">
+
+      <div class="filters-grid">
+
+        <div class="filter-group">
+
+          <label>Data</label>
+
+          <input type="date" id="filterDate">
+
+        </div>
+
+        <div class="filter-group">
+
+          <label>Godzina</label>
+
+          <select id="filterHour">
+
+            <option value="07:00">07:00</option>
+
+            <option value="10:00" selected>10:00</option>
+
+            <option value="14:00">14:00</option>
+
+            <option value="18:00">15:00</option>
+            <option value="18:00">17:00</option>
+            <option value="18:00">18:00</option>
+            <option value="18:00">20:00</option>
+
+          </select>
+
+        </div>
+
+        <div class="filter-group">
+
+          <label>Osoby</label>
+
+          <input type="number" id="filterCapacity" min="1" max="200" value="10">
+
+        </div>
+
+        <div class="filter-group">
+
+          <label>Widok</label>
+
+          <select id="filterView">
+
+            <option value="grid">Grid</option>
+
+            <option value="list">Lista</option>
+
+            <option value="map">Heatmap</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-grid">
+
+      <div>
+
+        <div id="gridView" class="rooms-grid"></div>
+
+        <div id="listView" class="rooms-list hidden"></div>
+
+        <div id="mapView" class="heatmap-container hidden">
+
+          <div class="heatmap-emoji">🗺️</div>
+
+          <h3 class="heatmap-title">Heatmap Rezerwacji</h3>
+
+          <p class="heatmap-desc">Poniżej możesz zobaczyć które sale są najpopularniejsze i kiedy</p>
+
+          <div class="heatmap-grid" id="heatmapGrid"></div>
+
+          <div class="heatmap-legend">
+
+            <div class="legend-item">
+
+              <div class="legend-color heatmap-cool"></div>
+
+              <span>Mało rezerwacji</span>
+
+            </div>
+
+            <div class="legend-item">
+
+              <div class="legend-color heatmap-warm"></div>
+
+              <span>Umiarkowanie</span>
+
+            </div>
+
+            <div class="legend-item">
+
+              <div class="legend-color heatmap-hot"></div>
+
+              <span>Popularne!</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+
+      <div class="sidebar">
+
+        <div id="chatBox" class="sidebar-card chat-box hidden">
+
+          <h3>⚡ AI Assistant</h3>
+
+          <div class="chat-messages">
+
+            <div class="chat-message bot">Cześć! 👋 Mogę Ci pomóc znaleźć idealną salę.</div>
+
+            <div class="chat-message user">Potrzebuję sali na spotkanie o 10:00</div>
+
+            <div class="chat-message bot">Super! Ile osób będzie?</div>
+
+          </div>
+
+          <input type="text" class="chat-input" placeholder="Pytaj AI...">
+
+        </div>
+
+        <div id="roomDetails" class="sidebar-card room-details">
+
+          <h3 id="detailRoomName"></h3>
+
+          <div class="detail-row">
+
+            <span class="detail-label">Pojemność:</span>
+
+            <span id="detailCapacity"></span>
+
+          </div>
+
+          <div class="detail-row">
+
+            <span class="detail-label">Lokalizacja:</span>
+
+            <span id="detailLocation"></span>
+
+          </div>
+
+          <div class="detail-row">
+
+            <span class="detail-label">Rating:</span>
+
+            <span id="detailRating"></span>
+
+          </div>
+
+          <div class="detail-separator"></div>
+
+          <div class="detail-row">
+
+            <span class="detail-label">Cena za 1h:</span>
+
+            <span id="detailPrice" style="font-size: 24px; font-weight: 900; color: #06b6d4;"></span>
+
+          </div>
+
+          <button class="btn-primary" style="width: 100%; margin-top: 16px;">Rezerwuj Teraz</button>
+
+          <button class="btn-secondary">Podziel się</button>
+
+        </div>
+
+        <div class="sidebar-card">
+
+          <h3>📈 Trendy</h3>
+
+          <div class="trends-item">
+
+            <span class="trends-label">Najczęściej rezerwowana</span>
+
+            <span class="trends-value">Code Cave</span>
+
+          </div>
+
+          <div class="trends-item">
+
+            <span class="trends-label">Najwyżej oceniana</span>
+
+            <span class="trends-value">Zen Garden</span>
+
+          </div>
+
+          <div class="trends-item">
+
+            <span class="trends-label">Aktywnych użytkowników</span>
+
+            <span class="trends-value" style="color: #06b6d4;">247</span>
+
+          </div>
+
+        </div>
+
+        <div class="info-box">
+
+          💡 <strong>Pro tip:</strong> Rezerwuj we wtorek, a zaoszczędź 20%!
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="spaceflow.js"></script>
+
+</body>
+
+</html>
